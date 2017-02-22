@@ -20,6 +20,6 @@ class ProductionConfig(Config):
 	DEBUG = False
 
 app_config = {
-	'developement': DevelopmentConfig,
-	'production':ProductionConfig
+	'development': DevelopmentConfig,
+	'production': ProductionConfig
 }

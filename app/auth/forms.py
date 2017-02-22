@@ -4,15 +4,18 @@ from wtforms.validators import DataRequired, Email, EqualTo
 
 from ..models import Employee
 
-class RegistrationFrom(FlaskForm):
+class RegistrationForm(FlaskForm):
 	"""
-	Form for user to create new acc
+	Form for users to create new account
 	"""
 	email = StringField('Email', validators=[DataRequired(), Email()])
 	username = StringField('Username', validators=[DataRequired()])
 	first_name = StringField('First Name', validators=[DataRequired()])
-	last_name = StringField('Last name', validators=[DataRequired()])
-	password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm_password')])
+	last_name = StringField('Last Name', validators=[DataRequired()])
+	password = PasswordField('Password', validators=[
+										DataRequired(),
+										EqualTo('confirm_password')
+										])
 	confirm_password = PasswordField('Confirm Password')
 	submit = SubmitField('Register')
 
@@ -26,8 +29,8 @@ class RegistrationFrom(FlaskForm):
 
 class LoginForm(FlaskForm):
 	"""
-    Form for users to login
-    """
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Login')
+	Form for users to login
+	"""
+	email = StringField('Email', validators=[DataRequired(), Email()])
+	password = PasswordField('Password', validators=[DataRequired()])
+	submit = SubmitField('Login')
