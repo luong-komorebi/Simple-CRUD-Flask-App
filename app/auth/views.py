@@ -44,10 +44,15 @@ def login():
 		if employee is not None and employee.verify_password(form.password.data):
 
 			# log employee in 
-			login_user(employee)
+			login_user(employee) 
 
-			# redirect to the dashboard page after login
-			return redirect(url_for('home.dashboard'))
+			# redirect to the appropriate dashboard page
+			if employee.is_admin:
+				return redirect(url_for('home.admin_dashboard'))
+			else:
+				return redirect(url_for('home.dashboard'))
+
+
 
 		# when login details are not correct
 		else:
