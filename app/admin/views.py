@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from . import admin 
 from forms import DepartmentForm
 from .. import db
-from ..models import DepartmentForm
+from ..models import Department
 
 def check_admin():
 	"""
@@ -17,14 +17,15 @@ def check_admin():
 
 @admin.route('/deparments', methods=['GET', 'POST'])
 @login_required
-def list_departments:
+def list_departments():
 	"""
 	List all departments
 	"""
 	check_admin()
 	departments = Department.query.all()
-	return render_template('admin/deparments/departments.html',
+	return render_template('admin/departments/departments.html',
 							departments=departments, title = 'Departments')
+
 
 @admin.route('/deparments/add', methods=['GET', 'POST'])
 @login_required
@@ -45,11 +46,13 @@ def add_department():
 		except:
 			#in case department name already exists 
 			flash('Error : Department name already exists')
+		#redirect to departments page
+		return redirect(url_for('admin.list_departments'))
 
-		# load the department template
-		return render_template('admin/deparments/deparment.html', action ="Add", add_department=add_department, form=form, title="Add Department")
+	# load the department template
+	return render_template('admin/departments/department.html', action ="Add", add_department=add_department, form=form, title="Add Department")
 
-@admin.route()('/departments/edit/<int:id>', methods=['GET', 'POST'])
+@admin.route('/departments/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_department(id):
 	"""
@@ -69,14 +72,14 @@ def edit_department(id):
 		# return to the departments page
 		return redirect(url_for('admin.list_departments'))
 
-	form.description.data = deparment.description
-	form.name.data = deparment.name 
-	return render_template('admin/deparments/department.html', action="Edit", add_department=add_department, form=form, deparment=deparment, title="Edit Department")
+	form.description.data = department.description
+	form.name.data = department.name 
+	return render_template('admin/departments/department.html', action="Edit", add_department=add_department, form=form, department=department, title="Edit Department")
 
 @admin.route('/departments/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_department(id):
-	 """
+	"""
 	Delete a department from the database
 	"""
 	check_admin()

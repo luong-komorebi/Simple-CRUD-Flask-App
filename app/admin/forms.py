@@ -1,8 +1,8 @@
-from flask_wtf import Flaskform
+from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
-class DepartmentForm(Flaskform):
+class DepartmentForm(FlaskForm):
 	"""
 	Form for admin to add or delete a department
 	"""
